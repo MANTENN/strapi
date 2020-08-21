@@ -40,7 +40,8 @@ module.exports = strapi => {
               return '*';
             }
 
-            if (!whitelist.includes(requestOrigin)) {
+            const isWhitelisted = whitelist.filter((regexp) => requestOrigin.match(regexp));
+            if (!isWhitelisted.length > 0) {
               return ctx.throw(`${requestOrigin} is not a valid origin`);
             }
             return requestOrigin;
